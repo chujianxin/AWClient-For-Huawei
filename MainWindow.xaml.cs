@@ -153,8 +153,10 @@ namespace AWClient
                                     MessageBox.Show("当前元素Name为空，无法录制下一元素！", "提示", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
                                     return;
                                 }
+                                //
+                                var ll = Newtonsoft.Json.JsonConvert.DeserializeObject<List<AW>>(last.Tag.ToString())[0];
 
-                                if (!utils.isRightName(last.Content.ToString()))
+                                if (!utils.isRightName(ll.record[0].elements[0].name))
                                 {
                                     cmdEdit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent, cmdEdit));
                                     listBox.SelectedItem = last;
@@ -172,16 +174,7 @@ namespace AWClient
 
                             item.Tag = jsonData;
 
-                            foreach (ListBoxItem li in listBox.Items)
-                            {
-                                var ee = Newtonsoft.Json.JsonConvert.DeserializeObject<List<AW>>(li.Tag.ToString())[0];
-                                if (ee.record[0].elements[0].xpath == element[0].record[0].elements[0].xpath)
-                                {
-                                    element[0].record[0].elements[0].name = ee.record[0].elements[0].name;
-                                    item.Tag = Newtonsoft.Json.JsonConvert.SerializeObject(element);
-                                    break;
-                                }
-                            }
+                           //
                             item.Style = (Style)Resources[element[0].record[0].elements[0].action.ToUpper()];
                             item.FontSize = 16;
 
@@ -193,6 +186,17 @@ namespace AWClient
                             itemIndex.Content = index;
                             itemIndex.Style = (Style)Resources["ListBoxItemNum"];
                             lstIndex.Items.Add(itemIndex);
+                            foreach (ListBoxItem li in listBox.Items)
+                            {
+                                var ee = Newtonsoft.Json.JsonConvert.DeserializeObject<List<AW>>(li.Tag.ToString())[0];
+                                if (ee.record[0].elements[0].xpath == element[0].record[0].elements[0].xpath)
+                                {
+                                    element[0].record[0].elements[0].name = ee.record[0].elements[0].name;
+                                    item.Tag = Newtonsoft.Json.JsonConvert.SerializeObject(element);
+                                    item.Content = ee.record[0].elements[0].name;
+                                    break;
+                                }
+                            }
                             index++;
                             //页面打标记
                             utils.CreateTempXml();
