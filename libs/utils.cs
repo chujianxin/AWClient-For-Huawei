@@ -132,7 +132,8 @@ namespace AWClient
                     StreamWriter sw = new StreamWriter(fs);
                     string outstr = ConvertJsonString(utils.awjson);
 
-                    outstr = outstr.Replace("\"name\": \"\",", "\"name\": \"" + sfd.SafeFileName.Split('.')[0]+"\"");
+                    outstr = outstr.Replace("\"name\": \"\",", "\"name\": \"" + sfd.SafeFileName.Split('.')[0]+"\",");
+                    outstr = outstr.Replace("\\r\\n", " ");
                     sw.Write(outstr.Substring(1).Substring(0, outstr.ToString().Length - 2));
                  
                     sw.Flush();
