@@ -246,7 +246,7 @@ namespace AWClient
                         CreateNode(xmlDoc, info, "domain", record.website);
                         XmlNode parents = CreateNode(xmlDoc, info, "parents", "");
 
-                        if (record.map.Replace(".map", "").EndsWith("_iframe"))
+                        if (record.iframesrc!="")
                         {
                             locator.Attributes.Append(CreateAttribute(locator, "selected", "iframe"));
                             XmlNode parent =CreateNode(xmlDoc, parents, "parent", "");
