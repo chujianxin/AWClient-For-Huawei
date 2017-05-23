@@ -283,10 +283,10 @@ namespace AWClient
                             xmlelement.Attributes.Append(CreateAttribute(xmlelement, "type", element.action.ToLower()));
 
                             XmlNode locator2 = CreateNode(xmlDoc, xmlelement, "locator", "");
-                            if (element.id != "")
+                            if ( utils.isRightName(element.id))
                                 locator2.Attributes.Append(CreateAttribute(locator2, "selected", "id"));
-                            else if (element.name != null)
-                                locator2.Attributes.Append(CreateAttribute(locator2, "selected", "name"));
+                            //else if (element.name != null)
+                            //    locator2.Attributes.Append(CreateAttribute(locator2, "selected", "name"));
                             else
                                 locator2.Attributes.Append(CreateAttribute(locator2, "selected", "xpath"));
 
@@ -364,10 +364,10 @@ namespace AWClient
                             xmlelement.Attributes.Append(CreateAttribute(xmlelement, "type", element.action.ToLower()));
 
                             XmlNode locator2 = CreateNode(xml[xmlNodeIndex], xmlelement, "locator", "");
-                            if (element.id != "")
+                            if (utils.isRightName(element.id))
                                 locator2.Attributes.Append(CreateAttribute(locator2, "selected", "id"));
-                            else if (element.name != null)
-                                locator2.Attributes.Append(CreateAttribute(locator2, "selected", "name"));
+                            //else if (element.name != null)
+                            //    locator2.Attributes.Append(CreateAttribute(locator2, "selected", "name"));
                             else
                                 locator2.Attributes.Append(CreateAttribute(locator2, "selected", "xpath"));
 
