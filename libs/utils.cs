@@ -10,6 +10,7 @@ using System.Windows;
 using System.Xml;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
+ 
 namespace AWClient 
 {
     public class utils
@@ -344,15 +345,20 @@ namespace AWClient
                                     bool isPathE1 = AWItem[0].record[ii].elements.Exists(x => x.xpath == element.xpath);
                                     bool isNameE1 = AWItem[0].record[ii].elements.Exists(x => x.name == element.name);
 
-                                    if (!isPathE1 && !isNameE1 && AWItem[0].record[i].map != record.map)
+                                    if (!isPathE1 && !isNameE1)
                                     {
                                         nonDuplicateElements.Add(element);
                                         break;
                                     }
+                                  
                                 }
 
                             }
                         }
+
+
+
+
 
                         foreach (var element in nonDuplicateElements)
                         {
@@ -407,7 +413,7 @@ namespace AWClient
                     }
                 }
 
-                
+                RemoveDupXml();
                 RefreshMapListBox();
             }
             catch (Exception e)
@@ -416,6 +422,41 @@ namespace AWClient
             }
          
         }
+        private static void RemoveDupXml()
+        {
+            for (int i = 0; i < xml.Count;i++ )
+            {
+                XmlDocument x = xml[i];
+                XmlDocument y = x;
+                XmlNodeList nodelistX = x.GetElementsByTagName("element");
+                XmlNodeList nodelistY = y.GetElementsByTagName("element");
+                int ct = 0;
+                for (int k = 0; k < nodelistX.Count; k++)
+                {
+                    XmlNode nodeX = nodelistX.Item(k);
+
+                    for (int j = 0; j < nodelistY.Count;j++ )
+                    {
+                        XmlNode nodeY = nodelistY.Item(j);
+                        if (nodeX.Attributes["name"].Value == nodeY.Attributes["name"].Value)
+                        {
+                            ct += 1;
+                        }
+                        if (ct > 1)
+                        {
+                            ct = 0;
+                            nodeX.ParentNode.RemoveChild(nodeX);
+                            x = xml[i];
+                            nodelistX = x.GetElementsByTagName("element");
+                        }
+                       
+                    }
+                    ct = 0;
+                }
+
+            }
+        }
+         
         public static void RefreshMapListBox()
         {
             MainWindow.lboxmap.Items.Clear();

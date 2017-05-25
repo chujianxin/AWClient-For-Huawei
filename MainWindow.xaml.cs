@@ -343,7 +343,7 @@ namespace AWClient
             ShowPage showPage = new ShowPage();
             showPage.WindowStartupLocation = WindowStartupLocation.CenterScreen; //使窗口位置在最中心
             showPage.Owner = this;
-            showPage.Show();
+            showPage.ShowDialog();
         }
 
         private void btnMin_Click(object sender, RoutedEventArgs e)
@@ -353,10 +353,14 @@ namespace AWClient
 
         private void OnNew_Click(object sender, RoutedEventArgs e)
         {
-            listBox.Items.Clear();
-            listbox.Items.Clear();
-            lstIndex.Items.Clear();
-            index = 1;
+            MessageBoxResult x = MessageBox.Show("你要清除所有记录并新建一个录制吗?", "提示信息", MessageBoxButton.OKCancel);
+            if (x == MessageBoxResult.OK)
+            {
+                listBox.Items.Clear();
+                listbox.Items.Clear();
+                lstIndex.Items.Clear();
+                index = 1;
+            }
         }
 
         private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
